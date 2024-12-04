@@ -30,6 +30,7 @@ interface InputProps extends TextInputProps {
           placeholderTextColor={theme.colors.textLight}
           onChangeText={onChangeText}
           ref={inputRef}
+          autoCapitalize="none"
           {...textInputProps} 
         />
       </View>

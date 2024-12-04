@@ -9,6 +9,7 @@ import { hp, wp } from "@/helpers/common";
 import Input from "@/components/input";
 import Icon from "@/assets/icons";
 import Button from "@/components/Button";
+import { supabase } from "@/lib/supabase";
 
 const Login = () => {
   const router = useRouter();
@@ -21,7 +22,19 @@ const Login = () => {
         Alert.alert(`Login`, 'Please fill all the fields!')
         return
     }
-    // API
+
+    let email = emailRef.current.trim();
+    let password = passwordRef.current.trim();
+    
+    setLoading(true);
+    
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    })
+
+    if (error) Alert.alert('Login', error.message)
+    setLoading(false)
   }
   return (
     <ScreenWrapper bg="white">
