@@ -6,11 +6,11 @@ import Icon from '@/assets/icons'
 // props
 
 interface InputProps extends TextInputProps {
-    icon?: ReactNode; // Icon is passed as a ReactNode (e.g., JSX)
-    placeholderName?: string; // Optional placeholder name
-    onChangeText: (text: string) => void; // Function to handle text changes
-    containerStyles?: ViewStyle; // Custom container styles
-    inputRef?: React.Ref<TextInput>; // Optional ref for the TextInput
+    icon?: ReactNode;
+    placeholderName?: string;
+    onChangeText: (text: string) => void; 
+    containerStyles?: ViewStyle; 
+    inputRef?: React.Ref<TextInput>;
   }
 
   const Input: React.FC<InputProps> = ({
@@ -30,7 +30,7 @@ interface InputProps extends TextInputProps {
           placeholderTextColor={theme.colors.textLight}
           onChangeText={onChangeText}
           ref={inputRef}
-          {...textInputProps} // Spread additional TextInputProps
+          {...textInputProps} 
         />
       </View>
     );
