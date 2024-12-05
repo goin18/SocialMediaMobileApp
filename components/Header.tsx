@@ -11,7 +11,7 @@ type HeaderProps = {
     mb?: number
 }
 
-const Header = ({ title, showBackButton = false, mb = 10 }: HeaderProps) => {
+const Header = ({ title, showBackButton = true, mb = 10 }: HeaderProps) => {
   const router = useRouter();
   return (
     <View style={[styles.container, { marginBottom: mb}]}>
