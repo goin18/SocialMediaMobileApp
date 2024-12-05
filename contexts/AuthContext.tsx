@@ -1,3 +1,4 @@
+import { UserData } from "@/services/userSerivice";
 import { User } from "@supabase/supabase-js";
 import { createContext, useContext, useState } from "react";
 
@@ -6,9 +7,10 @@ type AuthContextProviderProps = {
 };
 
 type AuthContextType = {
-    user: User | null; 
+    user: User | null;
+    userData: UserData | null;
     setAuth: (authUser: User | null) => void;
-    // setUserData: (userData: Partial<AuthContextType>) => void; // Optional user data update
+    setUserDataAuth: (userData: UserData) => void;
 };
 
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -23,17 +25,18 @@ export const useAuth = (): AuthContextType => {
 
 export const AuthProvider = ({ children }: AuthContextProviderProps) => {
 const [user, setUser] = useState<User | null>(null);
+const [userData, setUserData] = useState<UserData | null>(null);
 
-  const setAuth = (authUser: User) => {
+  const setAuth = (authUser: User | null) => {
     setUser(authUser);
   };
 
-//   const setUserData = (userData) => {
-//     setUser({ ...userData });
-//   };
+  const setUserDataAuth = (userData: UserData) => {
+    setUserData(userData);
+  };
 
 return (
-    <AuthContext.Provider value={{ user, setAuth }}>
+    <AuthContext.Provider value={{ user, userData, setAuth, setUserDataAuth }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,5 +1,7 @@
 import { AuthProvider, useAuth } from "@/contexts/AuthContext"
 import { supabase } from "@/lib/supabase"
+import { getUserData } from "@/services/userSerivice"
+import { User } from "@supabase/supabase-js"
 import { Stack, useRouter } from "expo-router"
 import { useEffect } from "react"
 
@@ -12,14 +14,14 @@ const _layout = () => {
 }
 
 const MainLayout = () => {
-    const { setAuth } = useAuth()
+    const { setAuth, setUserDataAuth } = useAuth()
     const router = useRouter()
 
     useEffect(() => {
         supabase.auth.onAuthStateChange((_event, session) => {
-            console.log(`Session user: `, session?.user?.id);
             if(session) {
                 setAuth(session.user)
+                updateUserData(session.user)
                 router.replace('/home')
             } else {
                 setAuth(null)
@@ -27,6 +29,13 @@ const MainLayout = () => {
             }
            })
     }, [])
+
+    const updateUserData = async (user: User) => {
+        let res = await getUserData(user.id)
+        if(res.success && res.data) {
+            setUserDataAuth(res.data)
+        }
+    }
 
     return (
         <Stack 

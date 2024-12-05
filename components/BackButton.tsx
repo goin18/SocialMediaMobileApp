@@ -4,7 +4,12 @@ import Icon from '@/assets/icons'
 import { theme } from '@/constants/theme'
 import { Router } from 'expo-router'
 
-const BackButton = ({size=26, router}:{size:number, router:Router}) => {
+type BackButtonProps = {
+  size?: number
+  router: Router
+}
+
+const BackButton = ({size=26, router}: BackButtonProps) => {
   return (
     <Pressable onPress={() => { router.back()}} style={styles.button}>
       <Icon name='arrowLeft' strokeWidth={2.5} size={size} color={theme.colors.text} />
