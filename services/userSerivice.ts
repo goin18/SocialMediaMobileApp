@@ -1,6 +1,6 @@
 import { supabase } from "@/lib/supabase";
 
-export interface UserData {
+export interface UserDataS {
   id: string;
   created_at: string; 
   name: string | null;
@@ -13,7 +13,7 @@ export interface UserData {
 interface GetUserDataResponse {
   success: boolean;
   msg?: string;
-  data?: UserData;
+  data?: UserDataS;
 }
 
 export const getUserData = async (
@@ -25,6 +25,27 @@ export const getUserData = async (
       .select("*") 
       .eq("id", userId)
       .single();
+
+    if (error) {
+      return { success: false, msg: error.message };
+    }
+
+    return { success: true, data };
+  } catch (error: any) {
+    console.error("Got Error:", error);
+    return { success: false, msg: error.message };
+  }
+};
+
+export const updateUser = async (
+  userId: string,
+  data:UserDataS
+): Promise<GetUserDataResponse> => {
+  try {
+    const { error } = await supabase
+      .from("users")
+      .update(data)
+      .eq(`id`, userId)
 
     if (error) {
       return { success: false, msg: error.message };
